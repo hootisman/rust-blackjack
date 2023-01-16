@@ -2,6 +2,7 @@
 use std::fmt::{self, Display};
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
+use rand::Rng;
 
 #[derive(Debug,EnumIter,Clone, Copy)]
 pub enum Suits {
@@ -76,7 +77,6 @@ impl Deck {
         for new_suit in Suits::iter() {
             for new_value in CardValues::iter() {
                 let card = Card { value: new_value, suit: new_suit };
-                println!("{}",card);
                 cards.push(card);
             }
         }
@@ -85,6 +85,29 @@ impl Deck {
             cards,
         }
     }
+   
+   pub fn shuffle(&mut self){
+        /*
+         * Fisher-Yates shuffle algo (Durstenfeld version)
+         */
+        
+        let mut rng = rand::thread_rng();
+
+        for x in 0..52{
+            let gen: u8 = rng.gen();
+            let outeri = 52 - x - 1; //outer index
+            let temp: u8= u8::from(gen) % (outeri + 1); 
+            // println!("x:{}, {}",x,temp);
+            self.cards.swap(temp.into(), outeri.into());
+        }
+
+   }
+   pub fn print(&self){
+       //prints all 52 cards
+        for line in self.cards.iter(){
+            println!("{}",line);
+        }
+   }
 }
 
 
