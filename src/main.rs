@@ -1,11 +1,16 @@
-use crate::deck::{
-    Card,
-    CardValues,
-    Suits,
-    Deck,
-};
 
 mod deck;
+pub mod enums;
+
+use crate::deck::{
+    Card,
+    Deck,
+};
+use crate::enums::{
+    Suits,
+    CardValues,
+};
+
 fn main() {
     let king: Card = Card { value: CardValues::Ace, suit: Suits::Spade }; 
     println!("{}",king); 
