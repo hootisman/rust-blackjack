@@ -1,5 +1,5 @@
 
-use strum::IntoEnumIterator;
+
 use strum_macros::EnumIter;
 
 #[derive(Debug,EnumIter,Clone, Copy)]
@@ -10,7 +10,7 @@ pub enum Suits {
     Club,
 }
 impl Suits {
-    fn value(&self) -> char{
+    pub fn value(&self) -> char{
         match self {
             Self::Spade => '♠',
             Self::Heart => '♥',
@@ -36,7 +36,7 @@ pub enum CardValues {
     King,
 }
 impl CardValues {
-    fn value(&self) -> &str{
+    pub fn value(&self) -> &str{
         match self {
             Self::Ace => "Ace",
             Self::Two => "Two",

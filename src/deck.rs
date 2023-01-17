@@ -1,5 +1,6 @@
 
 
+use strum::IntoEnumIterator;
 use std::fmt::{self, Display};
 use rand::Rng;
 use crate::enums::{
@@ -20,6 +21,7 @@ impl Display for Card {
 
 pub struct Deck {
     pub cards: Vec<Card>, 
+    pub len: u8,
 }
 
 impl Deck {
@@ -32,30 +34,33 @@ impl Deck {
                 cards.push(card);
             }
         }
+        let len: u8= cards.len() as u8;       
 
         Deck {
             cards,
+            len,
         }
     }
    
    pub fn shuffle(&mut self){
         /*
-         * Fisher-Yates shuffle algo (Durstenfeld version)
+         * fisher-yates shuffle algo (durstenfeld version)
          */
         
         let mut rng = rand::thread_rng();
-
-        for x in 0..52{
-            let gen: u8 = rng.gen();
-            let outeri = 52 - x - 1; //outer index
-            let temp: u8= u8::from(gen) % (outeri + 1); 
-            // println!("x:{}, {}",x,temp);
-            self.cards.swap(temp.into(), outeri.into());
+        for x in 0..self.len{
+            let gen: u8 = rng.gen();    //random u8 integer
+            let index: u8= u8::from(gen) % (self.len - x); 
+            // println!("x:{}, {}",x,index);
+            self.cards.swap(index.into(), (self.len - x - 1).into());
         }
 
    }
+   pub fn draw_card(&mut self) -> Option<Card> {
+        self.cards.pop()
+   }
    pub fn print(&self){
-       //prints all 52 cards
+       //prints all cards in deck
         for line in self.cards.iter(){
             println!("{}",line);
         }

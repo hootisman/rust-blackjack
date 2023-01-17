@@ -1,6 +1,6 @@
 
 mod deck;
-pub mod enums;
+mod enums;
 
 use crate::deck::{
     Card,
@@ -17,5 +17,7 @@ fn main() {
     let mut thedeck: Deck = Deck::new_default(); 
 
     thedeck.shuffle();
+    thedeck.print();
+    println!("Drawed: {}",thedeck.draw_card().unwrap());
     thedeck.print();
 }
